@@ -1,0 +1,1 @@
+# Ejercicio 2 visto en clase sobre el cuadrado magico, el problema de las damas y el triangulo de canicas
