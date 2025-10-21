@@ -145,13 +145,8 @@ sport_train = sport_model.fit(train_X, train_label, batch_size=batch_size,epochs
 sport_model.save("sports_mnist_2.h5")
 # evaluar la red
 test_eval = sport_model.evaluate(test_X, test_Y_one_hot, verbose=1)# entrenamiento
-sport_train = sport_model.fit(train_X, train_label, batch_size=batch_size,epochs=epochs,verbose=1,validation_data=(valid_X, valid_label))
-#guardamos el entrenamiento
-sport_model.save("sports_mnist_2.h5")
-# evaluar la red
-test_eval = sport_model.evaluate(test_X, test_Y_one_hot, verbose=1)
 
-2
+
 print('Test loss:', test_eval[0])
 print('Test accuracy:', test_eval[1])
 sport_train.history
