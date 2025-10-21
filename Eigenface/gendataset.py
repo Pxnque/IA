@@ -3,7 +3,7 @@ import cv2 as cv
 import math 
 
 rostro = cv.CascadeClassifier('haarcascade_frontalface_alt.xml')
-cap = cv.VideoCapture(0)
+cap = cv.VideoCapture('/home/panque/Downloads/mark2.mp4')
 i = 0  
 while True:
     ret, frame = cap.read()
@@ -17,8 +17,8 @@ while True:
        frame2 = cv.resize(frame2, (100, 100), interpolation=cv.INTER_AREA)
        
         
-       if(i%5==0):
-           cv.imwrite('/home/panque/repos/IA/Eigenface/oli/oli'+str(i)+'.jpg', frame2)
+       if(i%2==0):
+           cv.imwrite('/home/panque/repos/IA/Eigenface/caras/marck/marck'+str(i+1325)+'.jpg', frame2)
 
            cv.imshow('rostror', frame2)
     cv.imshow('rostros', frame)

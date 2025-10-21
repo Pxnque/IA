@@ -1,9 +1,11 @@
-/andre/
-/bicho/
-/emi/
-/marck/
-/oli/
-/vale/
+caras/
+emotions/
+emotions2/
+emotions2
+sportimages/
+animals/
+
+*.xml
 
 venv_ia/
 __pycache__/
