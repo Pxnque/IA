@@ -13,10 +13,30 @@ cap = cv2.VideoCapture(0)
 # Lista de índices de landmarks específicos (ojos y boca)
 selected_points = [33, 133, 362, 263, 61, 291, 4, 36]  # Ojos y boca
 
+CEJA_IZQ = [70, 63, 105, 66, 107]
+CEJA_DER = [336, 296, 334, 293, 300]
+
 
 def distancia(p1, p2):
     """Calcula la distancia euclidiana entre dos puntos."""
     return np.linalg.norm(np.array(p1) - np.array(p2))
+
+def analizar_cejas(face_landmarks, frame_shape):
+    """Analiza la posición de las cejas para detectar emociones."""
+    # Punto de referencia: centro del ojo izquierdo (159) y derecho (386)
+    ojo_izq_y = face_landmarks.landmark[159].y
+    ojo_der_y = face_landmarks.landmark[386].y
+    
+    # Promedio de altura de cejas
+    ceja_izq_y = np.mean([face_landmarks.landmark[i].y for i in CEJA_IZQ])
+    ceja_der_y = np.mean([face_landmarks.landmark[i].y for i in CEJA_DER])
+    
+    # Distancia vertical entre cejas y ojos (normalizada)
+    dist_izq = abs(ceja_izq_y - ojo_izq_y)
+    dist_der = abs(ceja_der_y - ojo_der_y)
+    dist_promedio = (dist_izq + dist_der) / 2
+    
+    return dist_promedio
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -40,14 +60,20 @@ while cap.isOpened():
                 cv2.circle(frame, (x, y), 2, (0, 255, 0), -1)  # Dibuja el punto en verde
                 
             dist=distancia(int(face_landmarks.landmark[labio_izq].x * frame.shape[1]),int(face_landmarks.landmark[labio_der].x * frame.shape[1]))
-
+            dist_cejas = analizar_cejas(face_landmarks, frame.shape)
                 
-            if dist > 68:
-                mood="Feliz"
-            elif dist < 55:
-                mood="Triste"
+            if dist > 65:
+                mood = "Feliz"
+            elif dist < 59:
+                if dist_cejas < 0.04:  # Cejas bajas
+                    mood = "Enojado"
+                else:
+                    mood = "Triste"
             else:
-                mood="Neutral"
+                if dist_cejas > 0.05:  # Cejas levantadas
+                    mood = "Sorprendido"
+                else:
+                    mood = "Neutral"
             
             #print(distancia(labio_izq,labio_der))
             cv2.putText(frame,f'{mood}',(10,30),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,125),2)

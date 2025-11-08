@@ -12,7 +12,7 @@ import keras
 # PASO 1: Cargar las imágenes de sportsimages
 # ----------------------------------------------------------------
 
-dirname = os.path.join(os.getcwd(), 'sportimages/sportimages')
+dirname = os.path.join(os.getcwd(), 'emotions2/train')
 imgpath = dirname + os.sep
 
 images = []
@@ -73,6 +73,20 @@ for directorio in directories:
 # --- Resto del código de la segunda imagen ---
 y = np.array(labels)
 X = np.array(images, dtype=np.uint8) #convierto de lista a numpy
+# Después de: X = np.array(images, dtype=np.uint8)
+print("Forma original de X:", X.shape)
+
+# Manejar diferentes formatos de imagen
+if len(X.shape) == 3:  # (n, 48, 48) - escala de grises
+    X = np.expand_dims(X, axis=-1)
+    print("Imágenes en escala de grises detectadas, agregando dimensión de canal")
+elif X.shape[-1] == 3:  # (n, 48, 48, 3) - RGB
+    print("Imágenes RGB detectadas")
+else:
+    print(f"Formato inesperado: {X.shape}")
+
+print("Forma ajustada de X:", X.shape)
+
 
 # Find the unique numbers from the train labels
 classes = np.unique(y)
@@ -113,11 +127,15 @@ print(train_X.shape, valid_X.shape, train_label.shape, valid_label.shape)
 # ----------------------------------------------------------------
 
 INIT_LR = 1e-3
-epochs = 6
+epochs = 10
 batch_size = 64
 
+channels = X.shape[-1]  # 1 para escala de grises, 3 para RGB
+img_height, img_width = X.shape[1], X.shape[2]
+
 sport_model = Sequential()
-sport_model.add(Conv2D(32, kernel_size=(3, 3), activation='linear', padding='same', input_shape=(21, 28, 3)))
+sport_model.add(Conv2D(32, kernel_size=(3, 3), activation='linear', 
+                      padding='same', input_shape=(img_height, img_width, channels)))
 sport_model.add(LeakyReLU(alpha=0.1))
 sport_model.add(MaxPooling2D((2, 2), padding='same'))
 
@@ -126,12 +144,18 @@ sport_model.add(LeakyReLU(alpha=0.1))
 sport_model.add(MaxPooling2D((2, 2), padding='same'))
 sport_model.add(Dropout(0.5))
 
+sport_model.add(Conv2D(128, kernel_size=(3, 3), activation='linear', padding='same'))
+sport_model.add(LeakyReLU(alpha=0.1))
+sport_model.add(MaxPooling2D((2, 2), padding='same'))
+sport_model.add(Dropout(0.5))
+
 sport_model.add(Flatten())
-sport_model.add(Dense(32, activation='linear'))
+sport_model.add(Dense(128, activation='linear'))
 sport_model.add(LeakyReLU(alpha=0.1))
 sport_model.add(Dropout(0.5))
 sport_model.add(Dense(nClasses, activation='softmax'))
 
+print(f"\nModelo configurado para imágenes de {img_height}x{img_width}x{channels}")
 sport_model.summary()
 
 sport_model.compile(
@@ -142,7 +166,7 @@ sport_model.compile(
 # entrenamiento
 sport_train = sport_model.fit(train_X, train_label, batch_size=batch_size,epochs=epochs,verbose=1,validation_data=(valid_X, valid_label))
 #guardamos el entrenamiento
-sport_model.save("sports_mnist_2.h5")
+sport_model.save("emotions.h5")
 # evaluar la red
 test_eval = sport_model.evaluate(test_X, test_Y_one_hot, verbose=1)# entrenamiento
 
