@@ -18,7 +18,7 @@ while True:
        
         
        if(i%2==0):
-           cv.imwrite('/home/panque/repos/IA/Eigenface/caras/marck/marck'+str(i+1325)+'.jpg', frame2)
+           cv.imwrite('/home/panque/repos/IA/Eigenface/animals/PetImages/Turtle/turtle'+str(i)+'.jpg', frame2)
 
            cv.imshow('rostror', frame2)
     cv.imshow('rostros', frame)

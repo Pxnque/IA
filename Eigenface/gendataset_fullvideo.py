@@ -1,8 +1,8 @@
 import cv2 as cv
 import os
 
-cap = cv.VideoCapture('/home/panque/Downloads/f11.mp4')
-output_dir = '/home/panque/repos/IA/Eigenface/sportimages/sportimages/f1'
+cap = cv.VideoCapture('/home/panque/Downloads/turtle.mp4')
+output_dir = '/home/panque/repos/IA/Eigenface/animals/PetImages/Turtle'
 os.makedirs(output_dir, exist_ok=True)
 
 i = 0
@@ -16,7 +16,7 @@ while True:
         break
     
     frame_resized = cv.resize(frame, (28, 21), interpolation=cv.INTER_AREA)
-    filename = os.path.join(output_dir, f'f11_{i}.jpg')  
+    filename = os.path.join(output_dir, f'turtle_{i}.jpg')  
     cv.imwrite(filename, frame_resized)
     
     
