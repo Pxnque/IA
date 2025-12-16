@@ -2,7 +2,7 @@ import os
 import glob
 
 # Ruta de la carpeta con las imágenes
-carpeta = '/home/panque/repos/IA/Eigenface/animals/PetImages/Dog/'
+carpeta = '/home/panque/repos/IA/Eigenface/animals/PetImagesx64/Mariquitax64/'
 
 # Obtener todas las imágenes jpg en la carpeta
 imagenes = sorted(glob.glob(os.path.join(carpeta, '*.jpg')))
@@ -10,7 +10,7 @@ imagenes = sorted(glob.glob(os.path.join(carpeta, '*.jpg')))
 print(f"Total de imágenes encontradas: {len(imagenes)}")
 
 # Número de imágenes a eliminar
-num_eliminar = 7499
+num_eliminar = 3351
 
 if len(imagenes) < num_eliminar:
     print(f"Error: Solo hay {len(imagenes)} imágenes, no se pueden eliminar {num_eliminar}")

@@ -13,7 +13,7 @@ import keras
 # ----------------------------------------------------------------
 
 #dirname = os.path.join(os.getcwd(), 'sportimages/sportimages')
-dirname = os.path.join(os.getcwd(), 'animals/PetImages')
+dirname = os.path.join(os.getcwd(), 'animals/PetImagesx64')
 imgpath = dirname + os.sep
 
 images = []
