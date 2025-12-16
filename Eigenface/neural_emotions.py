@@ -132,12 +132,10 @@ sport_model.add(MaxPooling2D((2, 2), padding='same'))
 sport_model.add(Dropout(0.3))
 
 sport_model.add(Conv2D(128, (3,3), padding='same',activation='relu'))
-
 sport_model.add(MaxPooling2D((2,2), padding='same'))
 sport_model.add(Dropout(0.4)) 
 
 sport_model.add(Conv2D(256, (3,3), padding='same',activation='relu'))
-
 sport_model.add(MaxPooling2D((2,2), padding='same'))
 sport_model.add(Dropout(0.5)) 
 

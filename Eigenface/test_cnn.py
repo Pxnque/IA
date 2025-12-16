@@ -47,8 +47,8 @@ def num1():
     #img_path = "/home/panque/repos/IA/Eigenface/animals/test/cat.jpg"
     #img_path = "/home/panque/repos/IA/Eigenface/animals/test/dog.jpg"
     #img_path = "/home/panque/repos/IA/Eigenface/animals/test/ant3.jpg"
-    img_path = "/home/panque/repos/IA/Eigenface/animals/test/ladybug.jpg"
-    img_path = "/home/panque/repos/IA/Eigenface/animals/test/turtle.jpg"
+    img_path = "/home/panque/repos/IA/Eigenface/animals/test/tort2.jpg"
+  
     X = preprocess_image(img_path)
 
     prediction = model.predict(X)
@@ -78,8 +78,8 @@ def num2():
 
     for filepath in filenames:
         image = plt.imread(filepath)
-        image_resized = resize(image, (21, 28), anti_aliasing=True, clip=False, preserve_range=True)
-        images.append(image_resized)
+        #image_resized = resize(image, (21, 28), anti_aliasing=True, clip=False, preserve_range=True)
+        images.append(image)
 
     X = np.array(images, dtype=np.uint8)  # Convierto de lista a numpy
     test_X = X.astype('float32')
